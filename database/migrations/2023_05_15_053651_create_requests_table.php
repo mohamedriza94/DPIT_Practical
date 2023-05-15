@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBiginteger('no');
+            $table->unsignedBiginteger('client');
+            $table->string('status');
+            $table->string('item');
+            $table->bigInteger('quantity');
+            $table->bigInteger('itemCost');
             $table->timestamps();
         });
     }

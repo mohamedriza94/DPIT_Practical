@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
+            $table->string('item');
+            $table->unsignedBiginteger('client');
+            $table->unsignedBiginteger('request');
+            $table->string('status');
+            $table->bigInteger('quantity');
+            $table->bigInteger('itemCost');
             $table->timestamps();
         });
     }
