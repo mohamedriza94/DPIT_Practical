@@ -89,6 +89,7 @@ class PurchaseRequestController extends Controller
         ->join('clients','requests.client','=','clients.id')
         ->where('requests.client','=',$clientData->id)
         ->orderBy('requests.id','DESC')->get([
+            'requests.id AS id',
             'items.name AS itemName',
             'items.code AS itemCode',
             'requests.status AS status',
@@ -110,7 +111,7 @@ class PurchaseRequestController extends Controller
             'requests.status AS status',
             'requests.quantity AS quantity',
             'requests.itemCost AS cost',
-            'requests.created_at AS createdAt'
+            'requests.created_at AS created_at'
         ]);
         return response()->json(['data' => $data]);
     }
