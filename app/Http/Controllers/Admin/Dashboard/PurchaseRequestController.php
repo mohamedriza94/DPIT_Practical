@@ -17,6 +17,7 @@ class PurchaseRequestController extends Controller
         $data = PurchaseRequest::join('items','requests.item','=','items.code')
         ->join('clients','requests.client','=','clients.id')
         ->orderBy('requests.id','DESC')->get([
+            'requests.id AS id',
             'requests.no AS no',
             'items.name AS itemName',
             'items.code AS itemCode',
@@ -34,7 +35,7 @@ class PurchaseRequestController extends Controller
         $data = PurchaseRequest::join('items','requests.item','=','items.code')
         ->join('clients','requests.client','=','clients.id')
         ->where('requests.id','=',$id)
-        ->orderBy('requests.id','DESC')->get([
+        ->orderBy('requests.id','DESC')->first([
             'items.name AS itemName',
             'items.code AS itemCode',
             'clients.email AS clientEmail',
@@ -67,15 +68,32 @@ class PurchaseRequestController extends Controller
                 $status = $request->input('status');
                 $newStatus = '-';
 
+                //get item quantity
+                $PurchaseRequestData = PurchaseRequest::find($request->input('id'));
+                $ItemData = Item::where('code',$PurchaseRequestData->item)->first();
+
+                $newQuantity = '0';
+
+                if($status == '1' && ($ItemData->quantity < $PurchaseRequestData->quantity))
+                {
+                    //if stock is NOT enough
+                    DB::rollBack();
+                    return response()->json([
+                        'status'=>400,
+                        'message'=>'Insufficient Stocks to Approve'
+                    ]);
+                }
+                else
+                {
+                    //if stock is enough
+                    $newQuantity = $ItemData->quantity - $PurchaseRequestData->quantity;
+                }
+                
                 switch ($status) {
                     case '1': 
                         $newStatus = 'approved';
 
                         //update item quantity
-                        $PurchaseRequestData = PurchaseRequest::find($request->input('id'));
-                        $ItemData = Item::where('code',$PurchaseRequestData->item)->first();
-
-                        $newQuantity = $ItemData->quantity - $PurchaseRequestData->quantity;
                         $ItemData->quantity = $newQuantity;
                         $ItemData->save();
                         
@@ -111,6 +129,7 @@ class PurchaseRequestController extends Controller
         ->join('clients','requests.client','=','clients.id')
         ->where('requests.no','Like','%'.$search.'%')
         ->orderBy('requests.id','DESC')->get([
+            'requests.id AS id',
             'requests.no AS no',
             'items.name AS itemName',
             'items.code AS itemCode',

@@ -138,12 +138,12 @@
                                         
                                         <div class="form-group col-12">
                                             <label class="form-label">Quantity</label>
-                                            <input type="text" name="quantity" readonly class="form-control" id="view_quantity">
+                                            <input type="text" name="quantity" class="form-control" id="view_quantity">
                                         </div>
                                         
                                         <div class="form-group col-12">
                                             <label class="form-label">Cost</label>
-                                            <input type="text" class="form-control" id="view_cost">
+                                            <input type="text" readonly class="form-control" id="view_cost">
                                         </div>
                                         
                                         <div class="form-group col-12">
@@ -318,8 +318,8 @@
                         $('#view_itemName').val(response.data.itemName);
                         $('#view_itemCode').val(response.data.itemCode);
                         $('#view_quantity').val(response.data.quantity);
-                        $('#view_cost').val(response.data.cost);
-                        $('#view_total').val(total);
+                        $('#view_cost').val('Rs. '+response.data.cost);
+                        $('#view_total').val('Rs. '+total);
                     }
                 });
             });
@@ -343,7 +343,7 @@
                 }
 
                 
-                let formData = new FormData($('#createForm')[0]);
+                let formData = new FormData($('#viewForm')[0]);
                 $.ajax({
                     type: "POST", url: "{{ url('client/dashboard/updatePurchaseRequest') }}",
                     data: formData, contentType:false, processData:false,
@@ -356,17 +356,17 @@
                                 toastType = 'error'; toastMessage += error; showToast(); //TOAST ALERT
                             });
                             
-                            $("#btnCreate").prop("disabled", false).text("Update");
+                            $("#btnUpdate").prop("disabled", false).text("Update");
                         }
                         else if(response.status == 400 || response.status == 600)
                         {
-                            $("#btnCreate").prop("disabled", false).text("Update");
+                            $("#btnUpdate").prop("disabled", false).text("Update");
                             toastType = 'error'; toastMessage = response.message; showToast(); //TOAST ALERT
                         }
                         else if(response.status == 200)
                         {
-                            $("#btnCreate").prop("disabled", false).text("Update");
-                            $('#createForm')[0].reset(); //FORM RESET INPUT
+                            $("#btnUpdate").prop("disabled", false).text("Update");
+                            $('#viewModal').modal('hide');  //HIDE MODAL
                             readPurchaseRequest();
                             
                             Swal.fire({ title: 'Success', text: "Request Updated",

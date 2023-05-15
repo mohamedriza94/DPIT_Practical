@@ -96,7 +96,7 @@
                                         
                                         <div class="form-group col-4">
                                             <label class="form-label">Cost</label>
-                                            <input type="text" class="form-control" id="view_cost">
+                                            <input type="text" readonly class="form-control" id="view_cost">
                                         </div>
                                         
                                         <div class="form-group col-4">
@@ -158,11 +158,11 @@
                                 break;
                                 case 'approved':
                                 status_badge = '<span class="label label-success">Approved</span>';
-                                status_button = '-';
+                                status_button = '';
                                 break;
                                 case 'disapproved':
                                 status_badge = '<span class="label label-danger">Disapproved</span>';
-                                status_button = '-';
+                                status_button = '';
                                 break;
                             }
 
@@ -213,8 +213,8 @@
                         $('#view_itemCode').val(response.data.itemCode);
                         $('#view_quantity').val(response.data.quantity);
                         $('#view_customer').val(response.data.clientEmail);
-                        $('#view_cost').val(response.data.cost);
-                        $('#view_total').val(total);
+                        $('#view_cost').val('Rs. '+response.data.cost);
+                        $('#view_total').val('Rs. '+total);
                     }
                 });
             });
@@ -259,7 +259,7 @@
                 var status = '1';
                 var data = { 'id':id,'status':status }
                 $.ajax({
-                    type:"PUT",
+                    type:"POST",
                     url: "{{ url('admin/dashboard/updatePurchaseRequestStatus') }}",
                     data:data,
                     dataType:"json",

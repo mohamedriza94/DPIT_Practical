@@ -106,7 +106,7 @@ class PurchaseRequestController extends Controller
         $data = PurchaseRequest::join('items','requests.item','=','items.code')
         ->join('clients','requests.client','=','clients.id')
         ->where('requests.client','=',$this->clientData->id)->where('requests.id','=',$id)
-        ->orderBy('requests.id','DESC')->get([
+        ->orderBy('requests.id','DESC')->first([
             'items.name AS itemName',
             'items.code AS itemCode',
             'requests.status AS status',
@@ -137,7 +137,7 @@ class PurchaseRequestController extends Controller
             else
             {
                 //get item details
-                $itemData = Item::find($request->input('item'));
+                $itemData = Item::where('code',$request->input('item'))->first();
 
                 PurchaseRequest::where('id',$request->input('id'))->update([ 
                     'status' => 'pending',
