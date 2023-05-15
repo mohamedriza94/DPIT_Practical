@@ -13,19 +13,19 @@ Route::prefix('client')->namespace('App\Http\Controllers\Client')->middleware(['
         Route::prefix('dashboard')->middleware(['auth:client'])->group(function () {
 
             //page route
-            Route::get('/', 'HomeController@dashboard')->name('client.dashboard');
+            Route::get('/', 'Dashboard\HomeController@dashboard')->name('client.dashboard');
 
             //purchase requests
-            Route::get('/readItems', 'PurchaseRequestController@readItems');
+            Route::get('/readItems', 'Dashboard\PurchaseRequestController@readItems');
 
-            Route::post('/createPurchaseRequest', 'PurchaseRequestController@create');
-            Route::get('/readPurchaseRequest', 'PurchaseRequestController@read');
-            Route::get('/readOnePurchaseRequest/{id}', 'PurchaseRequestController@readOne');
-            Route::post('/updatePurchaseRequest', 'PurchaseRequestController@update');
-            Route::get('/searchPurchaseRequest/{search}', 'PurchaseRequestController@search');
+            Route::post('/createPurchaseRequest', 'Dashboard\PurchaseRequestController@create');
+            Route::get('/readPurchaseRequest', 'Dashboard\PurchaseRequestController@read');
+            Route::get('/readOnePurchaseRequest/{id}', 'Dashboard\PurchaseRequestController@readOne');
+            Route::post('/updatePurchaseRequest', 'Dashboard\PurchaseRequestController@update');
+            Route::get('/searchPurchaseRequest/{search}', 'Dashboard\PurchaseRequestController@search');
             
             //purchases
-            Route::get('/readPurchase', 'PurchaseController@read');
+            Route::get('/readPurchase', 'Dashboard\PurchaseController@read');
         });
     });
 });

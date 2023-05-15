@@ -26,14 +26,14 @@ class RedirectIfAuthenticated
                 case 'admin':
                     if (Auth::guard($guard)->check()) 
                     {
-                        return redirect()->route('admin.dashboard'); //if rubi admin is authenticated, redirect to rubi dashboard
+                        return redirect()->route('admin.dashboard'); 
                     }
                     break;
                 
                     case 'client':
                         if (Auth::guard($guard)->check()) 
                         {
-                            return redirect()->route('client.dashboard'); //if business is authenticated, redirect to business dashboard
+                            return redirect()->route('client.dashboard');  
                         }
                         break;
                     }

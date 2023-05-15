@@ -103,7 +103,7 @@
             </div>
             <footer class="footer">© <?php echo date('Y'); ?> DPIT </footer>
         </div>
-        <script src="{{ asset('admin/assets/node_modules/jquery/dist/jquery.min.js') }}"></s>
+        <script src="{{ asset('admin/assets/node_modules/jquery/dist/jquery.min.js') }}"></script>
         <script src="{{ asset('admin/assets/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('admin/assets/dist/js/perfect-scrollbar.jquery.min.js') }}"></script>
         <script src="{{ asset('admin/assets/dist/js/waves.js') }}"></script>

@@ -13,26 +13,26 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['we
         Route::prefix('dashboard')->middleware(['auth:admin'])->group(function () {
 
             //page route
-            Route::get('/', 'HomeController@dashboard')->name('admin.dashboard');
-            Route::get('/', 'HomeController@item')->name('admin.item');
+            Route::get('/', 'Dashboard\HomeController@dashboard')->name('admin.dashboard');
+            Route::get('/', 'Dashboard\HomeController@item')->name('admin.item');
 
             //items
-            Route::post('/createItem', 'ItemController@create');
-            Route::get('/readItem', 'ItemController@read');
-            Route::get('/readOneItem/{id}', 'ItemController@readOne');
-            Route::get('/updateQuantity/{id}', 'ItemController@updateQuantity');
-            Route::post('/updateItem', 'ItemController@update');
-            Route::get('/searchItem/{search}', 'ItemController@search');
+            Route::post('/createItem', 'Dashboard\ItemController@create');
+            Route::get('/readItem', 'Dashboard\ItemController@read');
+            Route::get('/readOneItem/{id}', 'Dashboard\ItemController@readOne');
+            Route::get('/updateQuantity/{id}', 'Dashboard\ItemController@updateQuantity');
+            Route::post('/updateItem', 'Dashboard\ItemController@update');
+            Route::get('/searchItem/{search}', 'Dashboard\ItemController@search');
 
             //purchase requests
-            Route::get('/readPurchaseRequest', 'PurchaseRequestController@read');
-            Route::get('/readOnePurchaseRequest/{id}', 'PurchaseRequestController@readOne');
-            Route::post('/updatePurchaseRequestStatus', 'PurchaseRequestController@updateStatus');
-            Route::get('/searchPurchaseRequest/{search}', 'PurchaseRequestController@search');
+            Route::get('/readPurchaseRequest', 'Dashboard\PurchaseRequestController@read');
+            Route::get('/readOnePurchaseRequest/{id}', 'Dashboard\PurchaseRequestController@readOne');
+            Route::post('/updatePurchaseRequestStatus', 'Dashboard\PurchaseRequestController@updateStatus');
+            Route::get('/searchPurchaseRequest/{search}', 'Dashboard\PurchaseRequestController@search');
 
             //purchase
-            Route::get('/readPurchase', 'PurchaseController@read');
-            Route::get('/searchPurchase/{search}', 'PurchaseController@search');
+            Route::get('/readPurchase', 'Dashboard\PurchaseController@read');
+            Route::get('/searchPurchase/{search}', 'Dashboard\PurchaseController@search');
         });
     });
 });

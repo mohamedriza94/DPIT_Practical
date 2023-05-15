@@ -59,7 +59,7 @@ class PurchaseRequestController extends Controller
 
                 PurchaseRequest::create([ 
                     'no' => $no,
-                    'client' => $clientData->id,
+                    'client' => $this->clientData->id,
                     'status' => 'pending',
                     'item' => $request->input('item'),
                     'quantity' => $request->input('quantity'),
@@ -87,7 +87,7 @@ class PurchaseRequestController extends Controller
     {
         $data = PurchaseRequest::join('items','requests.item','=','items.code')
         ->join('clients','requests.client','=','clients.id')
-        ->where('requests.client','=',$clientData->id)
+        ->where('requests.client','=',$this->clientData->id)
         ->orderBy('requests.id','DESC')->get([
             'requests.id AS id',
             'items.name AS itemName',
@@ -104,7 +104,7 @@ class PurchaseRequestController extends Controller
     {
         $data = PurchaseRequest::join('items','requests.item','=','items.code')
         ->join('clients','requests.client','=','clients.id')
-        ->where('requests.client','=',$clientData->id)->where('requests.id','=',$id)
+        ->where('requests.client','=',$this->clientData->id)->where('requests.id','=',$id)
         ->orderBy('requests.id','DESC')->get([
             'items.name AS itemName',
             'items.code AS itemCode',
@@ -166,7 +166,7 @@ class PurchaseRequestController extends Controller
     {
         $data = PurchaseRequest::join('items','requests.item','=','items.code')
         ->join('clients','requests.client','=','clients.id')
-        ->where('requests.client','=',$clientData->id)->where('requests.no','Like','%'.$search.'%')
+        ->where('requests.client','=',$this->clientData->id)->where('requests.no','Like','%'.$search.'%')
         ->orderBy('requests.id','DESC')->get([
             'items.name AS itemName',
             'items.code AS itemCode',
