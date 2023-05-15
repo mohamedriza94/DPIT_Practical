@@ -55,7 +55,7 @@ class PurchaseRequestController extends Controller
                 }
 
                 //get item details
-                $itemData = Item::find($request->input('item'));
+                $itemData = Item::where('code',$request->input('item'))->first();
 
                 PurchaseRequest::create([ 
                     'no' => $no,
@@ -89,6 +89,7 @@ class PurchaseRequestController extends Controller
         ->join('clients','requests.client','=','clients.id')
         ->where('requests.client','=',$this->clientData->id)
         ->orderBy('requests.id','DESC')->get([
+            'requests.no AS no',
             'requests.id AS id',
             'items.name AS itemName',
             'items.code AS itemCode',
@@ -168,6 +169,7 @@ class PurchaseRequestController extends Controller
         ->join('clients','requests.client','=','clients.id')
         ->where('requests.client','=',$this->clientData->id)->where('requests.no','Like','%'.$search.'%')
         ->orderBy('requests.id','DESC')->get([
+            'requests.no AS no',
             'items.name AS itemName',
             'items.code AS itemCode',
             'requests.status AS status',

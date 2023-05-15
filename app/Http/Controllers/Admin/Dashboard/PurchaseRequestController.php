@@ -17,6 +17,7 @@ class PurchaseRequestController extends Controller
         $data = PurchaseRequest::join('items','requests.item','=','items.code')
         ->join('clients','requests.client','=','clients.id')
         ->orderBy('requests.id','DESC')->get([
+            'requests.no AS no',
             'items.name AS itemName',
             'items.code AS itemCode',
             'clients.email AS clientEmail',
@@ -110,6 +111,7 @@ class PurchaseRequestController extends Controller
         ->join('clients','requests.client','=','clients.id')
         ->where('requests.no','Like','%'.$search.'%')
         ->orderBy('requests.id','DESC')->get([
+            'requests.no AS no',
             'items.name AS itemName',
             'items.code AS itemCode',
             'clients.email AS clientEmail',

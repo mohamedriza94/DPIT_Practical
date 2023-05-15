@@ -31,7 +31,7 @@ class ItemController extends Controller
             else
             {
                 //generate an item code
-                $cost = rand(0000,9999);
+                $code = rand(0000,9999);
                 $exists = Item::where('code', $code)->exists();
                 while ($exists) {
                     $code = rand(0000,9999);

@@ -156,11 +156,11 @@
                                 <td>'+item.name+'</td>\
                                 <td>'+status_badge+'</td>\
                                 <td>'+item.quantity+'</td>\
-                                <td>'+item.unitCost+'</td>\
-                                <td>'+total+'</td>\
+                                <td>Rs. '+item.unitCost+'</td>\
+                                <td>Rs. '+total+'</td>\
                                 <td>\
                                     <div class="btn-group m-b-10 m-r-10">\
-                                        <button class="btn btn-warning" id="btnUpdateQuantity" value="'+item.id+'">Add More</button>\
+                                        <button class="btn btn-warning" id="btnUpdateQuantity" value="'+item.id+'">+ 1</button>\
                                     </div>\
                                 </td>\
                                 </tr>'); 
@@ -227,7 +227,7 @@
             $(document).on('keyup', '#searchItem', function(e) {
                 url = "{{ url('admin/dashboard/searchItem/:search') }}";
                 url = url.replace(':search', $(this).val());
-                readPurchaseRequest();
+                readItems();
             });
         });
     </script>

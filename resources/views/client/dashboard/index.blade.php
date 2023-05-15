@@ -38,6 +38,7 @@
                         <table class="table color-table purple-table">
                             <thead>
                                 <tr>
+                                    <th>Request No.</th>
                                     <th>Item Name</th>
                                     <th>Item Code</th>
                                     <th>Status</th>
@@ -223,12 +224,13 @@
                             var total = item.cost * item.quantity;
                             
                             $('#requestsTable').append('<tr>\
-                                <td>'+item.name+'</td>\
-                                <td>'+item.code+'</td>\
+                                <td>'+item.no+'</td>\
+                                <td>'+item.itemName+'</td>\
+                                <td>'+item.itemCode+'</td>\
                                 <td>'+status_badge+'</td>\
                                 <td>'+item.quantity+'</td>\
-                                <td>'+item.cost+'</td>\
-                                <td>'+total+'</td>\
+                                <td>Rs. '+item.cost+'</td>\
+                                <td>Rs. '+total+'</td>\
                                 <td>'+date+''+time+'</td>\
                                 <td>\
                                     <div class="btn-group m-b-10 m-r-10">\

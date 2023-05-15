@@ -36,6 +36,7 @@
                         <table class="table color-table purple-table">
                             <thead>
                                 <tr>
+                                    <th>Request No.</th>
                                     <th>Customer</th>
                                     <th>Item Code</th>
                                     <th>Status</th>
@@ -153,7 +154,7 @@
                                 case 'pending':
                                 status_badge = '<span class="label label-warning">Pending</span>';
                                 status_button = '<button id="btnApprove" value="'+item.id+'" class="btn btn-success">Approve</button>\
-                                <button id="btnDisapprove" value="'+item.id+'" class="btn btn-success">Disapprove</button>';
+                                <button id="btnDisapprove" value="'+item.id+'" class="btn btn-danger">Disapprove</button>';
                                 break;
                                 case 'approved':
                                 status_badge = '<span class="label label-success">Approved</span>';
@@ -171,17 +172,17 @@
                             var total = item.cost * item.quantity;
                             
                             $('#requestsTable').append('<tr>\
+                                <td>'+item.no+'</td>\
                                 <td>'+item.clientEmail+'</td>\
-                                <td>'+item.code+'</td>\
-                                <td>'+item.name+'</td>\
+                                <td>'+item.itemCode+'</td>\
                                 <td>'+status_badge+'</td>\
                                 <td>'+item.quantity+'</td>\
-                                <td>'+item.cost+'</td>\
-                                <td>'+total+'</td>\
+                                <td>Rs. '+item.cost+'</td>\
+                                <td>Rs. '+total+'</td>\
                                 <td>'+date+''+time+'</td>\
                                 <td>\
                                     <div class="btn-group m-b-10 m-r-10">\
-                                        <button id="btnView" value="'+item.id+'" class="btn btn-success">See</button>\
+                                        <button id="btnView" value="'+item.id+'" class="btn btn-primary">See</button>\
                                         '+status_button+'\
                                     </div>\
                                 </td>\
