@@ -129,9 +129,11 @@
 
                                         <div class="form-group col-12">
                                             <label class="form-label">Choose New Item (Optional)</label>
-                                            <select class="form-select" name="item" id="itemUpdate">
+                                            <select class="form-select" id="itemUpdate">
                                             </select>
                                         </div>
+
+                                        <input type="hidden" name="item" id="updateItem">
                                         
                                         <div class="form-group col-12">
                                             <label class="form-label">Quantity</label>
@@ -184,8 +186,9 @@
             }
 
             readPurchaseRequest();
+            readItems();
             
-            //read packages
+            //read requests
             function readPurchaseRequest()
             {
                 configureUrl();
@@ -233,6 +236,21 @@
                                     </div>\
                                 </td>\
                                 </tr>'); 
+                            });
+                        }
+                    });
+            }
+
+            //read items
+            function readItems()
+            {$.ajax({
+                    type: "GET", url:"{{ url('client/dashboard/readItems') }}", dataType:"json",
+                    success:function(response){
+                        
+                        $.each(response.data,function(key,item){
+                            
+                            $('#item').append('<option value="'+item.code+'">'+item.name+'</option>'); 
+                            $('#itemUpdate').append('<option value="'+item.code+'">'+item.name+'</option>'); 
                             });
                         }
                     });
@@ -309,6 +327,19 @@
                 e.preventDefault();
                 
                 $("#btnUpdate").prop("disabled", true).text("Updating...");
+                
+                //check if new item has been selected
+                var selectedItem = $('#itemUpdate option:selected');
+                
+                if (selectedItem.length > 0) {
+                    var item = $('#itemUpdate').val();
+
+                    $('#updateItem').val(item);
+
+                } else {
+                    $('#updateItem').val($('#view_itemCode').val());
+                }
+
                 
                 let formData = new FormData($('#createForm')[0]);
                 $.ajax({
