@@ -7,5 +7,9 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    //
+    public function dashboard()
+    {
+        $view_data['title'] = 'DPIT - Admin';
+        return view('admin.dashboard.index')->with($view_data)
+    }
 }

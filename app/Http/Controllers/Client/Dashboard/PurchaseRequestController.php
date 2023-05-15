@@ -22,6 +22,12 @@ class PurchaseRequestController extends Controller
         });
     }
 
+    public function readItems()
+    {
+        $data = Item::where('isAvailable',1)->orderby('id','DESC')->get();
+        return response()->json(['data' => $data]);
+    }
+
     public function create(Request $request)
     {
         DB::beginTransaction();
@@ -145,13 +151,13 @@ class PurchaseRequestController extends Controller
             DB::rollBack();
             return response()->json([
                 'status'=>400,
-                'message'=>'Could not make request. Try again'
+                'message'=>'Could not update request. Try again'
             ]);
         }
         
         return response()->json([
             'status'=>200,
-            'message'=>'Request Made Successfully'
+            'message'=>'Request Updated Successfully'
         ]);
     }
     
@@ -159,7 +165,7 @@ class PurchaseRequestController extends Controller
     {
         $data = PurchaseRequest::join('items','requests.item','=','items.code')
         ->join('clients','requests.client','=','clients.id')
-        ->where('requests.client','=',$clientData->id)->('requests.no','Like','%'.$search.'%')
+        ->where('requests.client','=',$clientData->id)->where('requests.no','Like','%'.$search.'%')
         ->orderBy('requests.id','DESC')->get([
             'items.name AS itemName',
             'items.code AS itemCode',

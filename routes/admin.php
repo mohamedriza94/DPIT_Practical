@@ -18,19 +18,19 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['we
             //items
             Route::post('/createItem', 'ItemController@create');
             Route::get('/readItem', 'ItemController@read');
-            Route::get('/readOneItem', 'ItemController@readOne');
-            Route::put('/updateItem', 'ItemController@update');
-            Route::get('/searchItem', 'ItemController@search');
+            Route::get('/readOneItem/{id}', 'ItemController@readOne');
+            Route::post('/updateItem', 'ItemController@update');
+            Route::get('/searchItem/{search}', 'ItemController@search');
 
             //purchase requests
             Route::get('/readPurchaseRequest', 'PurchaseRequestController@read');
-            Route::get('/readOnePurchaseRequest', 'PurchaseRequestController@readOne');
-            Route::put('/updatePurchaseRequest', 'PurchaseRequestController@update');
-            Route::get('/searchPurchaseRequest', 'PurchaseRequestController@search');
+            Route::get('/readOnePurchaseRequest/{id}', 'PurchaseRequestController@readOne');
+            Route::post('/updatePurchaseRequestStatus', 'PurchaseRequestController@updateStatus');
+            Route::get('/searchPurchaseRequest/{search}', 'PurchaseRequestController@search');
 
             //purchase
             Route::get('/readPurchase', 'PurchaseController@read');
-            Route::get('/searchPurchase', 'PurchaseController@search');
+            Route::get('/searchPurchase/{search}', 'PurchaseController@search');
         });
     });
 });

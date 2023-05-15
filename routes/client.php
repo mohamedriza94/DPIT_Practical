@@ -21,8 +21,8 @@ Route::prefix('client')->namespace('App\Http\Controllers\Client')->middleware(['
             Route::post('/createPurchaseRequest', 'PurchaseRequestController@create');
             Route::get('/readPurchaseRequest', 'PurchaseRequestController@read');
             Route::get('/readOnePurchaseRequest/{id}', 'PurchaseRequestController@readOne');
-            Route::put('/updatePurchaseRequest', 'PurchaseRequestController@update');
-            Route::get('/searchPurchaseRequest', 'PurchaseRequestController@search');
+            Route::post('/updatePurchaseRequest', 'PurchaseRequestController@update');
+            Route::get('/searchPurchaseRequest/{search}', 'PurchaseRequestController@search');
             
             //purchases
             Route::get('/readPurchase', 'PurchaseController@read');
