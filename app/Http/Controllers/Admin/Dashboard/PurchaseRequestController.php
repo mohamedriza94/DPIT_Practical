@@ -36,6 +36,7 @@ class PurchaseRequestController extends Controller
         ->orderBy('requests.id','DESC')->get([
             'items.name AS itemName',
             'items.code AS itemCode',
+            'clients.email AS clientEmail',
             'requests.status AS status',
             'requests.quantity AS quantity',
             'requests.itemCost AS cost',
@@ -66,7 +67,18 @@ class PurchaseRequestController extends Controller
                 $newStatus = '-';
 
                 switch ($status) {
-                    case '1': $newStatus = 'approved'; break;
+                    case '1': 
+                        $newStatus = 'approved';
+
+                        //update item quantity
+                        $PurchaseRequestData = PurchaseRequest::find($request->input('id'));
+                        $ItemData = Item::where('code',$PurchaseRequestData->item)->first();
+
+                        $newQuantity = $ItemData->quantity - $PurchaseRequestData->quantity;
+                        $ItemData->quantity = $newQuantity;
+                        $ItemData->save();
+                        
+                    break;
                     
                     case '0': $newStatus = 'disapproved'; break;
                 }

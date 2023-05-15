@@ -14,11 +14,13 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['we
 
             //page route
             Route::get('/', 'HomeController@dashboard')->name('admin.dashboard');
+            Route::get('/', 'HomeController@item')->name('admin.item');
 
             //items
             Route::post('/createItem', 'ItemController@create');
             Route::get('/readItem', 'ItemController@read');
             Route::get('/readOneItem/{id}', 'ItemController@readOne');
+            Route::get('/updateQuantity/{id}', 'ItemController@updateQuantity');
             Route::post('/updateItem', 'ItemController@update');
             Route::get('/searchItem/{search}', 'ItemController@search');
 

@@ -78,7 +78,7 @@ class ItemController extends Controller
     
     public function read()
     {
-        $data = Item::orderBy('requests.id','DESC')->get();
+        $data = Item::orderBy('id','DESC')->get();
         return response()->json(['data' => $data]);
     }
     
@@ -90,9 +90,10 @@ class ItemController extends Controller
     
     public function search($search)
     {
-        $data = Item::where('code','Like','%'.$search.'%')->orderBy('requests.id','DESC')->get();
+        $data = Item::where('code','Like','%'.$search.'%')->orderBy('id','DESC')->get();
         return response()->json(['data' => $data]);
     }
+
     public function update(Request $request)
     {
         DB::beginTransaction();
@@ -151,6 +152,17 @@ class ItemController extends Controller
         return response()->json([
             'status'=>200,
             'message'=>'Item Updated Successfully'
+        ]);
+    }
+    
+    public function updateQuantity($id)
+    {
+        $itemData = Item::find($id);
+        $itemData->quantity = $itemData->quantity + 1;
+        $itemData->save();
+        
+        return response()->json([
+            'status'=>200,
         ]);
     }
 }

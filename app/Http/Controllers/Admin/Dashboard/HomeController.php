@@ -12,4 +12,10 @@ class HomeController extends Controller
         $view_data['title'] = 'DPIT - Admin';
         return view('admin.dashboard.index')->with($view_data)
     }
+
+    public function item()
+    {
+        $view_data['title'] = 'DPIT - Admin';
+        return view('admin.dashboard.item')->with($view_data)
+    }
 }

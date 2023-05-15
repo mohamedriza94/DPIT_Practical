@@ -74,6 +74,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li><a class="waves-effect waves-dark" href="{{ route('admin.dashboard') }}"><i class="icon-speedometer"></i><span class="hide-menu">Dashboard</span></a></li>
+                        <li><a class="waves-effect waves-dark" href="{{ route('admin.item') }}"><i class="icon-speedometer"></i><span class="hide-menu">Items</span></a></li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->

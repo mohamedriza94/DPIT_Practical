@@ -81,7 +81,7 @@
                                         </div>
                                         
                                         <div class="form-group col-12">
-                                            <label class="form-label">Quantity (LKR)</label>
+                                            <label class="form-label">Quantity</label>
                                             <input class="form-control" min="0" type="number" id="quantity" name="quantity">
                                         </div>
                                         <div class="col-12">
@@ -106,7 +106,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myLargeModalLabel">View Department</h4>
+                    <h4 class="modal-title" id="myLargeModalLabel">View Request</h4>
                     <button class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="modal-body">
@@ -179,7 +179,7 @@
             var url = "{{ url('client/dashboard/readPurchaseRequest') }}";
             function configureUrl()
             {
-                var length = $('#searchActivities').val().length;
+                var length = $('#searchRequests').val().length;
                 if (length == 0) {
                     url = "{{ url('client/dashboard/readPurchaseRequest') }}";
                 }
@@ -204,15 +204,15 @@
                             //sorting STATUS
                             switch(item.status) {
                                 case 'pending':
-                                status_badge = '<span class="label label-warning">Pending</span>'; //ACTIVE
-                                status_button = '<button id="btnChangeStatus" value="'+item.id+'" class="btn btn-danger">Deactivate</button>';
+                                status_badge = '<span class="label label-warning">Pending</span>';
+                                status_button = '-';
                                 break;
                                 case 'approved':
-                                status_badge = '<span class="label label-success">Approved</span>'; //INACTIVE
+                                status_badge = '<span class="label label-success">Approved</span>';
                                 status_button = '-';
                                 break;
                                 case 'disapproved':
-                                status_badge = '<span class="label label-danger">Disapproved</span>'; //INACTIVE
+                                status_badge = '<span class="label label-danger">Disapproved</span>';
                                 status_button = '<button id="btnView" value="'+item.id+'" class="btn btn-success">Modify Request</button>';
                                 break;
                             }
