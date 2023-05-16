@@ -11,7 +11,7 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-        $view_data['title'] = 'DPIT - Client'; 
+        $view_data['title'] = 'DPIT - Customer'; $view_data['customer'] = Auth::guard('client')->user()->name;
         return view('client.dashboard.index')->with($view_data);
     }
 }

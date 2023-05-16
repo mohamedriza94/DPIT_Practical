@@ -152,27 +152,27 @@
                             //sorting STATUS
                             switch(item.status) {
                                 case 'pending':
-                                status_badge = '<span class="label label-warning">Pending</span>';
+                                status_badge = '<span class="label font-16 p-2 label-warning">Pending</span>';
                                 status_button = '<button id="btnApprove" value="'+item.id+'" class="btn btn-success">Approve</button>\
                                 <button id="btnDisapprove" value="'+item.id+'" class="btn btn-danger">Disapprove</button>';
                                 break;
                                 case 'approved':
-                                status_badge = '<span class="label label-success">Approved</span>';
+                                status_badge = '<span class="label font-16 p-2 label-success">Approved</span>';
                                 status_button = '';
                                 break;
                                 case 'disapproved':
-                                status_badge = '<span class="label label-danger">Disapproved</span>';
+                                status_badge = '<span class="label font-16 p-2 label-danger">Disapproved</span>';
                                 status_button = '';
                                 break;
                             }
 
                             //format time
-                            formatTime(item.created_at);
+                            formatTime(item.createdAt);
 
                             var total = item.cost * item.quantity;
                             
                             $('#requestsTable').append('<tr>\
-                                <td>'+item.no+'</td>\
+                                <td><b>'+item.no+'</b></td>\
                                 <td>'+item.clientEmail+'</td>\
                                 <td>'+item.itemCode+'</td>\
                                 <td>'+status_badge+'</td>\
@@ -266,7 +266,8 @@
                     success: function(response){
                         if(response.status == 400)
                         {
-                            toastType = 'error'; toastMessage = response.message; showToast(); //TOAST ALERT
+                            Swal.fire({ title: 'Low on Stock', text: response.message,
+                            icon: 'error', confirmButtonColor: '#3085d6', confirmButtonText: 'OK' });
                             readPurchaseRequest();
                         }
                         else if(response.status == 200)

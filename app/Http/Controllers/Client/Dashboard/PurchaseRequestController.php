@@ -96,7 +96,7 @@ class PurchaseRequestController extends Controller
             'requests.status AS status',
             'requests.quantity AS quantity',
             'requests.itemCost AS cost',
-            'requests.created_at AS createdAt'
+            'requests.updated_at AS createdAt'
         ]);
         return response()->json(['data' => $data]);
     }
@@ -175,7 +175,7 @@ class PurchaseRequestController extends Controller
             'requests.status AS status',
             'requests.quantity AS quantity',
             'requests.itemCost AS cost',
-            'requests.created_at AS createdAt'
+            'requests.updated_at AS createdAt'
         ]);
         return response()->json(['data' => $data]);
     }

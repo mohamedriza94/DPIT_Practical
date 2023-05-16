@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Request AS PurchaseRequest;
 use App\Models\Item;
@@ -25,7 +26,7 @@ class PurchaseRequestController extends Controller
             'requests.status AS status',
             'requests.quantity AS quantity',
             'requests.itemCost AS cost',
-            'requests.created_at AS createdAt'
+            'requests.updated_at AS createdAt'
         ]);
         return response()->json(['data' => $data]);
     }
@@ -42,7 +43,7 @@ class PurchaseRequestController extends Controller
             'requests.status AS status',
             'requests.quantity AS quantity',
             'requests.itemCost AS cost',
-            'requests.created_at AS createdAt'
+            'requests.updated_at AS createdAt'
         ]);
         return response()->json(['data' => $data]);
     }
@@ -80,7 +81,7 @@ class PurchaseRequestController extends Controller
                     DB::rollBack();
                     return response()->json([
                         'status'=>400,
-                        'message'=>'Insufficient Stocks to Approve'
+                        'message'=>'Insufficient stocks available to approve'
                     ]);
                 }
                 else
@@ -137,7 +138,7 @@ class PurchaseRequestController extends Controller
             'requests.status AS status',
             'requests.quantity AS quantity',
             'requests.itemCost AS cost',
-            'requests.created_at AS createdAt'
+            'requests.updated_at AS createdAt'
         ]);
         return response()->json(['data' => $data]);
     }

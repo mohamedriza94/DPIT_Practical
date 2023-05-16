@@ -5,13 +5,13 @@
 {{-- breadcrumb --}}
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">{{ $title }}</h4>
+        <h4 class="text-themecolor">{{ $title }} : Logged in as <b><i>{{ $customer }}</i></b></h4>
     </div>
     <div class="col-md-7 align-self-center text-end">
         <div class="d-flex justify-content-end align-items-center">
             <ol class="breadcrumb justify-content-end">
                 <li class="breadcrumb-item"><a href="{{ route('client.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active">{{ $title }}</li>
+                <li class="breadcrumb-item active">Customer</li>
             </ol>
             <button data-bs-toggle="modal" data-bs-target="#createModal" class="btn btn-info d-none d-lg-block m-l-15 text-white"><i
                 class="fa fa-plus-circle"></i> New Request</button>
@@ -33,7 +33,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title" id="dataCount">Purchase Requests</h4>
+                    <h4 class="card-title" id="dataCount">My Purchase Requests</h4>
                     <div class="table-responsive">
                         <table class="table color-table purple-table">
                             <thead>
@@ -205,26 +205,26 @@
                             //sorting STATUS
                             switch(item.status) {
                                 case 'pending':
-                                status_badge = '<span class="label label-warning">Pending</span>';
+                                status_badge = '<span class="label font-16 p-2 label-warning">Pending</span>';
                                 status_button = '-';
                                 break;
                                 case 'approved':
-                                status_badge = '<span class="label label-success">Approved</span>';
+                                status_badge = '<span class="label font-16 p-2 label-success">Approved</span>';
                                 status_button = '-';
                                 break;
                                 case 'disapproved':
-                                status_badge = '<span class="label label-danger">Disapproved</span>';
+                                status_badge = '<span class="label font-16 p-2 label-danger">Disapproved</span>';
                                 status_button = '<button id="btnView" value="'+item.id+'" class="btn btn-success">Modify Request</button>';
                                 break;
                             }
 
                             //format time
-                            formatTime(item.created_at);
+                            formatTime(item.createdAt);
 
                             var total = item.cost * item.quantity;
                             
                             $('#requestsTable').append('<tr>\
-                                <td>'+item.no+'</td>\
+                                <td><b>'+item.no+'</b></td>\
                                 <td>'+item.itemName+'</td>\
                                 <td>'+item.itemCode+'</td>\
                                 <td>'+status_badge+'</td>\

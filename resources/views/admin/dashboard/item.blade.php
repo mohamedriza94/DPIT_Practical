@@ -142,17 +142,17 @@
                             //sorting STATUS
                             switch(item.isAvailable) {
                                 case 1:
-                                status_badge = '<span class="label label-success">In Stock</span>';
+                                status_badge = '<span class="label font-16 p-2 label-success">In Stock</span>';
                                 break;
                                 case 0:
-                                status_badge = '<span class="label label-danger">Out of Stock</span>'; 
+                                status_badge = '<span class="label font-16 p-2 label-danger">Out of Stock</span>'; 
                                 break;
                             }
                             
                             var total = item.unitCost * item.quantity;
                             
                             $('#itemsTable').append('<tr>\
-                                <td>'+item.code+'</td>\
+                                <td><b>'+item.code+'</b></td>\
                                 <td>'+item.name+'</td>\
                                 <td>'+status_badge+'</td>\
                                 <td>'+item.quantity+'</td>\
