@@ -24,8 +24,9 @@
 
         <div class="col-md-12">
             <div class="card">
-                <div class="card-body">
-                    <input type="text" id="searchRequests" class="form-control" placeholder="Search by Request No.">
+                <div class="card-body d-flex">
+                    <input type="text" id="searchRequests" class="form-control" placeholder="Search by Request No."> &nbsp;
+                    <button class="btn btn-dark" id="btnRefresh">Refresh</button>
                 </div>
             </div>
         </div>
@@ -206,11 +207,11 @@
                             switch(item.status) {
                                 case 'pending':
                                 status_badge = '<span class="label font-16 p-2 label-warning">Pending</span>';
-                                status_button = '-';
+                                status_button = 'N/A';
                                 break;
                                 case 'approved':
                                 status_badge = '<span class="label font-16 p-2 label-success">Approved</span>';
-                                status_button = '-';
+                                status_button = 'N/A';
                                 break;
                                 case 'disapproved':
                                 status_badge = '<span class="label font-16 p-2 label-danger">Disapproved</span>';
@@ -257,6 +258,11 @@
                         }
                     });
             }
+
+            //refresh
+            $(document).on('click', '#btnRefresh', function(e){
+                readPurchaseRequest();
+            });
             
             //Create
             $(document).on('click', '#btnCreate', function(e) {

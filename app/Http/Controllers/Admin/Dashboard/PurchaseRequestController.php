@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Request AS PurchaseRequest;
 use App\Models\Item;
+use App\Models\Client;
+use PDF;
 
 class PurchaseRequestController extends Controller
 {
@@ -55,6 +57,7 @@ class PurchaseRequestController extends Controller
             // Validate the request data
             $validator = Validator::make($request->all(), [          
                 'id' => 'required|numeric|exists:requests,id',
+                'message' => 'required|string'
             ]);
             
             if ($validator->fails()) { 
@@ -73,8 +76,13 @@ class PurchaseRequestController extends Controller
                 $PurchaseRequestData = PurchaseRequest::find($request->input('id'));
                 $ItemData = Item::where('code',$PurchaseRequestData->item)->first();
 
+                //get associated client's data
+                $client = $PurchaseRequestData->client;
+                $client = Client::find($client);
+
                 $newQuantity = '0';
 
+                //check if stock is enough
                 if($status == '1' && ($ItemData->quantity < $PurchaseRequestData->quantity))
                 {
                     //if stock is NOT enough
@@ -98,9 +106,46 @@ class PurchaseRequestController extends Controller
                         $ItemData->quantity = $newQuantity;
                         $ItemData->save();
                         
+                        //CREATE AND MAIL INVOICE
+                        //get data for pdf
+                        $note = 'Your Request No. '.$PurchaseRequestData->no.' has been approved.';
+                        $data["email"] = $client->email;
+                        $data["title"] = 'Request Approval';
+                        $data["requestNo"] = $PurchaseRequestData->no;
+                        $data["approvalDate"] = date("Y-m-d");
+                        $data["approvalTime"] = date("h:i A");
+                        $data["itemCode"] = $ItemData->code;
+                        $data["itemName"] = $ItemData->name;
+                        $data["unitPrice"] = $PurchaseRequestData->itemCost;
+                        $data["quantity"] = $PurchaseRequestData->quantity;
+                        $data["total"] = $PurchaseRequestData->itemCost * $PurchaseRequestData->quantity;
+                        $data["note"] = $note;
+
+                        $pdf = PDF::loadView('mail.invoicePDF',$data);
+                        
+                        Mail::send('mail.invoiceEmail', $data, function($message)use($data, $pdf, $note) {
+                            $message->to($data["email"], $data["email"])
+                            ->subject($data["title"])
+                            ->attachData($pdf->output(), "Invoice.pdf");
+                        });
+                        
                     break;
                     
-                    case '0': $newStatus = 'disapproved'; break;
+                    case '0': 
+                        $newStatus = 'disapproved'; 
+                        
+                        //send mail
+                        $data["email"] = $client->email;
+                        $data["title"] = "Request Disapproval";
+                        $data["requestNo"] = $PurchaseRequestData->no;
+                        $data["reason"] = $request->input('message');
+                        
+                        Mail::send('mail.disapprovalMail', $data, function($message)use($data) {
+                            $message->to($data["email"])
+                            ->subject($data["title"]);
+                        }); 
+
+                    break;
                 }
 
                 PurchaseRequest::where('id',$request->input('id'))->update([ 
